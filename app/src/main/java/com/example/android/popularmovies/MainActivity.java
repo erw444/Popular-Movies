@@ -1,6 +1,5 @@
 package com.example.android.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.popularmovies.Utilities.NetworkUtils;
 import com.example.android.popularmovies.Utilities.OpenMovieJsonUtils;
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         @Override
         protected Movie[] doInBackground(String... params) {
 
-            URL movieRequestUrl = NetworkUtils.buildPopularMoviesUrl();
+            URL movieRequestUrl = NetworkUtils.buildMoviesUrl(NetworkUtils.SORT.POPULAR);
 
             try {
                 String jsonMovieResponse = NetworkUtils

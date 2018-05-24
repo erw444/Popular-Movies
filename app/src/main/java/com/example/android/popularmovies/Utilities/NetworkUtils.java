@@ -2,6 +2,7 @@ package com.example.android.popularmovies.Utilities;
 
 import android.net.Uri;
 import android.util.Log;
+import android.util.Size;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,18 +12,25 @@ import java.net.URL;
 import java.util.Scanner;
 
 public final class NetworkUtils {
+
+    public enum SIZE { SMALL, BIG; }
+    public enum SORT { POPULAR, HIGHRATE; }
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private static final String MOVIE_API_KEY = "7ac81052647f10c184bd1f0b96117960";
 
-    private static final String POPULAR_MOVIE_URL =
-            "http://api.themoviedb.org/3/movie/popular";
+    private static final String MOVIE_URL =
+            "http://api.themoviedb.org/3/movie/";
+
+    private static final String MOVIE_POPULAR_URL = "popular";
+
+    private static final String MOVIE_HIGHEST_RATED_URL = "top_rated";
 
     private static final String MOVIE_POSTER_URL = "http://image.tmdb.org/t/p/";
 
-    private static final String MOVIE_POSTER_SIZE = "w185/";
+    private static final String MOVIE_POSTER_SIZE_SMALL = "w185/";
 
-    private static final String MOVIE_BASE_URL = POPULAR_MOVIE_URL;
+    private static final String MOVIE_POSTER_SIZE_BIG = "original/";
 
     final static String API_KEY = "api_key";
 
@@ -31,8 +39,16 @@ public final class NetworkUtils {
      *
      * @return The URL to use to query the weather server.
      */
-    public static URL buildPopularMoviesUrl() {
-        Uri builtUri = Uri.parse(POPULAR_MOVIE_URL).buildUpon()
+    public static URL buildMoviesUrl(SORT sort) {
+        String strMovieUri = MOVIE_URL;
+
+        if(sort == SORT.POPULAR){
+            strMovieUri += MOVIE_POPULAR_URL;
+        } else if (sort == SORT.HIGHRATE){
+            strMovieUri += MOVIE_HIGHEST_RATED_URL;
+        }
+
+        Uri builtUri = Uri.parse(strMovieUri).buildUpon()
                 .appendQueryParameter(API_KEY, MOVIE_API_KEY)
                 .build();
 
@@ -48,8 +64,17 @@ public final class NetworkUtils {
         return url;
     }
 
-    public static URL buildMoviePosterUrl(String posterPath){
-        Uri builtUri = Uri.parse(MOVIE_POSTER_URL + MOVIE_POSTER_SIZE + posterPath).buildUpon().build();
+    public static URL buildMoviePosterUrl(String posterPath, SIZE size){
+
+        String strMoviePosterUri = MOVIE_POSTER_URL;
+
+        if(size == SIZE.SMALL) {
+            strMoviePosterUri += MOVIE_POSTER_SIZE_SMALL;
+        } else if (size == SIZE.BIG){
+            strMoviePosterUri += MOVIE_POSTER_SIZE_BIG;
+        }
+
+        Uri builtUri = Uri.parse(strMoviePosterUri + posterPath).buildUpon().build();;
 
         URL url = null;
         try {

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.popularmovies.Utilities.NetworkUtils;
 import com.squareup.picasso.Picasso;
@@ -102,8 +101,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.MovieAdapte
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder movieAdapterViewHolder, int position) {
         Movie movie = mMovieData[position];
-        //TODO Adapt Movie object to fit list item.
-        URL posterRequestUrl = NetworkUtils.buildMoviePosterUrl(movie.getPosterPath());
+        URL posterRequestUrl = NetworkUtils.buildMoviePosterUrl(movie.getPosterPath(), NetworkUtils.SIZE.SMALL);
 
         Picasso.with(movieAdapterViewHolder.mContext).load(posterRequestUrl.toString()).into(movieAdapterViewHolder.mMoviePosterImageView);
 

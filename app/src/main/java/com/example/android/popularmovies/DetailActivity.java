@@ -1,7 +1,6 @@
 package com.example.android.popularmovies;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -51,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         populateUI();
-        URL posterRequestUrl = NetworkUtils.buildMoviePosterUrl(mMovie.getPosterPath());
+        URL posterRequestUrl = NetworkUtils.buildMoviePosterUrl(mMovie.getPosterPath(), NetworkUtils.SIZE.BIG);
         Picasso.with(this).load(posterRequestUrl.toString()).into(mPosterView);
 
         setTitle(mMovie.getTitle());

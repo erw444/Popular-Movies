@@ -26,7 +26,7 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.MovieAdapte
      * The interface that receives onClick messages.
      */
     public interface MovieAdapterOnClickHandler {
-        void onClick(String weatherForDay);
+        void onClick(Movie movie);
     }
 
     /**
@@ -62,8 +62,8 @@ public class MovieAdapter extends  RecyclerView.Adapter<MovieAdapter.MovieAdapte
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            //String weatherForDay = mWeatherData[adapterPosition];
-            //mClickHandler.onClick(weatherForDay);
+            Movie movieSelected = mMovieData[adapterPosition];
+            mClickHandler.onClick(movieSelected);
         }
     }
 

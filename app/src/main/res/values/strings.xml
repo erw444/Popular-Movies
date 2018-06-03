@@ -14,4 +14,8 @@
     <string name="error_message">Error in Loading Movies...</string>
 
     <string name="detail_error_message">Sandwich data not available</string>
+
+    <string name="popular">Most Popular</string>
+
+    <string name="highest_rated">Highest Rated</string>
 </resources>

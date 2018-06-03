@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     private MovieAdapter mMovieAdapter;
     private ProgressBar mProgessBar;
     private TextView mErrorTextView;
+    private boolean mSearchPopular = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,26 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
         loadMovieData();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemThatWasClickedId = item.getItemId();
+        if (itemThatWasClickedId == R.id.action_search_popular) {
+            mSearchPopular = true;
+            loadMovieData();
+            return true;
+        } else if (itemThatWasClickedId == R.id.action_search_highest_rated) {
+            mSearchPopular = false;
+            loadMovieData();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onClick(Movie movie) {
@@ -84,7 +107,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         @Override
         protected Movie[] doInBackground(String... params) {
 
-            URL movieRequestUrl = NetworkUtils.buildMoviesUrl(NetworkUtils.SORT.POPULAR);
+            URL movieRequestUrl = null;
+            if(mSearchPopular){
+                movieRequestUrl = NetworkUtils.buildMoviesUrl(NetworkUtils.SORT.POPULAR);
+            } else {
+                movieRequestUrl = NetworkUtils.buildMoviesUrl(NetworkUtils.SORT.HIGHRATE);
+            }
+
 
             try {
                 String jsonMovieResponse = NetworkUtils
@@ -92,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
                 Movie[] jsonMovieData = OpenMovieJsonUtils
                         .getMovieDataFromJson(MainActivity.this, jsonMovieResponse);
+
 
                 return jsonMovieData;
 

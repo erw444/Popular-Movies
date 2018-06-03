@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.util.Size;
 
+import com.example.android.popularmovies.BuildConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -17,7 +19,7 @@ public final class NetworkUtils {
     public enum SORT { POPULAR, HIGHRATE; }
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String MOVIE_API_KEY = "7ac81052647f10c184bd1f0b96117960";
+    private static final String MOVIE_API_KEY = BuildConfig.MOVIE_API_KEY;
 
     private static final String MOVIE_URL =
             "http://api.themoviedb.org/3/movie/";
